@@ -5,7 +5,7 @@ require 'mnemosyne/bot/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "mnemosyne"
-  spec.version       = Mnemosyne::BOT::VERSION
+  spec.version       = Mnemosyne::Bot::VERSION
   spec.authors       = ["Jelizondo"]
   spec.email         = ["jelizondo.s@icalialabs.com"]
 
