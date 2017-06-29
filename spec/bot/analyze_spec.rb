@@ -2,10 +2,18 @@ require 'spec_helper'
 
 describe Mnemosyne::Bot::Analyze do
   describe '.analyze' do
-    it "should return a instance of type" do
+    it "should return a instance of type Mnemosyne::Bot::AnalysisResult" do
       stub_response = AnalyzeResponseExample.new
       allow(Mnemosyne::Bot::Analyze).to receive(:post).and_return(stub_response)
-      expect(Mnemosyne::Bot::Analyze.analyze("","")).to be kind_of(Mnemosyne::Bot::AnalysisResult)
+      expect(Mnemosyne::Bot::Analyze.analyze("","")).to be_kind_of(Mnemosyne::Bot::AnalysisResult)
+    end
+  end
+
+  describe '.get_analyze' do
+    it "should return a instance of type Mnemosyne::Bot::AnalysisResult" do
+      stub_response = GetAnalyzeResponseExample.new
+      allow(Mnemosyne::Bot::Analyze).to receive(:get).and_return(stub_response)
+      expect(Mnemosyne::Bot::Analyze.get_analyze("","")).to be_kind_of(Mnemosyne::Bot::AnalysisResult)
     end
   end
 end
@@ -81,5 +89,31 @@ class AnalyzeResponseExample
           }
         ]
       }'
+  end
+end
+
+class GetAnalyzeResponseExample
+  def success?
+    true
+  end
+
+  def body
+  '{
+      "language": "en",
+      "categories": [
+        {
+          "score": 0.252672,
+          "label": "/technology and computing"
+        },
+        {
+          "score": 0.165837,
+          "label": "/business and industrial"
+        },
+        {
+          "score": 0.160846,
+          "label": "/business and industrial/business operations"
+        }
+      ]
+    }'
   end
 end

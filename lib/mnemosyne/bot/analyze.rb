@@ -1,3 +1,5 @@
+require 'mnemosyne/bot/analyze/analysis_result'
+
 module Mnemosyne
   module Bot
     class Analyze < Olimpo::Base
@@ -6,7 +8,15 @@ module Mnemosyne
                                                        headers: { "Content-Type" => "application/json" })
 
         parsed_response = JSON.parse(response.body)
-        return parsed_response if response.success?
+        return Mnemosyne::Bot::AnalysisResult.new(parsed_response) if response.success?
+        raise_exception(response.code, response.body)
+      end
+
+      def self.get_analyze(version, parameters = {})
+        response = get("/analyze?version=#{version}", query: parameters)
+
+        parsed_response = JSON.parse(response.body)
+        return Mnemosyne::Bot::AnalysisResult.new(parsed_response) if response.success?
         raise_exception(response.code, response.body)
       end
     end
